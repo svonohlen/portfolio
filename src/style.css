@@ -46,7 +46,6 @@ body {
   flex-direction: column;
   z-index: 1;
   margin-bottom: 3em;
-  border: 1px solid red;
 }
 
 .text-headline {
@@ -62,6 +61,7 @@ body {
   z-index: 2;
   position: fixed;
   width: 100vw;
+  border: 1px solid red;
 }
 
 ul {
@@ -91,7 +91,7 @@ li {
   font-size: 0.5vw;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 768px) {
   .welcomecontainer {
     background-image: url("../static/images/lightbulb_background_vertical2.png");
     background-size: cover;
@@ -101,21 +101,38 @@ li {
 
   .welcomelayer {
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     flex-direction: column;
   }
 
   .text-container {
-    height: 20vh;
-    width: 70vw;
+    height: 40vh;
+    width: 80vw;
+    margin-bottom: 0;
+    margin-top: 5%;
+    border: 1px solid red;
+    justify-content: flex-start;
   }
 
   .text-headline {
     font-size: 18vw;
+    border: 1px solid red;
+    margin-top: 4.5vh;
+    margin-bottom: 7vh;
   }
 
   .text-subtitle {
-    font-size: 5 vw;
+    font-size: 5vw;
+    border: 1px solid red;
+  }
+
+  .switch-container {
+    font-size: 1.5vw;
+    margin-top: 31.5vh;
+    margin-left: 88vw;
+    border: 1px solid red;
+    width: 10vw;
+    height: 25vh;
   }
 }
 
