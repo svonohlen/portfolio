@@ -548,18 +548,21 @@ li {
 
 .switch-led-green:after {
   content: "ON";
-  top: -1.8em;
+  bottom: -1.8em;
 }
 
 .switch-led-red:after {
   content: "OFF";
-  bottom: -1.8em;
+  top: -1.8em;
 }
 
 .switch-led-green {
-  top: -5em;
+  bottom: -5em;
   border-top: 0.1em solid rgba(0, 161, 75, 0.5);
   border-bottom: 0.1em solid rgba(255, 255, 255, 0.25);
+  -webkit-box-shadow: 0 0 3em rgb(0, 161, 75);
+  -moz-box-shadow: 0 0 3em rgb(0, 161, 75);
+  box-shadow: 0 0 3em rgb(0, 161, 75);
 }
 
 .switch-led-green .switch-led-light {
@@ -567,13 +570,19 @@ li {
   border: 0.1em solid rgb(0, 104, 56);
 }
 
+.switch-led-green .switch-led-glow {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.4);
+  filter: alpha(opacity=40);
+}
+
 .switch-led-red {
-  bottom: -5em;
+  top: -5em;
   border-top: 0.1em solid rgba(237, 28, 36, 0.2);
   border-bottom: 0.1em solid rgba(255, 255, 255, 0.25);
-  -webkit-box-shadow: 0 0 3em rgb(237, 28, 36);
-  -moz-box-shadow: 0 0 3em rgb(237, 28, 36);
-  box-shadow: 0 0 3em rgb(237, 28, 36);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 .switch-led-red .switch-led-light {
@@ -582,9 +591,8 @@ li {
 }
 
 .switch-led-red .switch-led-glow {
-  background: #fff;
-  background: rgba(255, 255, 255, 0.3);
-  filter: alpha(opacity=30);
+  background: rgba(255, 255, 255, 0);
+  filter: alpha(opacity=0);
 }
 
 /* Switch on */
@@ -619,24 +627,24 @@ li {
 }
 
 .switch input:checked ~ .switch-led-green {
-  -webkit-box-shadow: 0 0 3em rgb(0, 161, 75);
-  -moz-box-shadow: 0 0 3em rgb(0, 161, 75);
-  box-shadow: 0 0 3em rgb(0, 161, 75);
-}
-
-.switch input:checked ~ .switch-led-green .switch-led-glow {
-  background: #fff;
-  background: rgba(255, 255, 255, 0.4);
-  filter: alpha(opacity=40);
-}
-
-.switch input:checked ~ .switch-led-red {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-.switch input:checked ~ .switch-led-red .switch-led-glow {
+.switch input:checked ~ .switch-led-green .switch-led-glow {
   background: rgba(255, 255, 255, 0);
   filter: alpha(opacity=0);
+}
+
+.switch input:checked ~ .switch-led-red {
+  -webkit-box-shadow: 0 0 3em rgb(237, 28, 36);
+  -moz-box-shadow: 0 0 3em rgb(237, 28, 36);
+  box-shadow: 0 0 3em rgb(237, 28, 36);
+}
+
+.switch input:checked ~ .switch-led-red .switch-led-glow {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.3);
+  filter: alpha(opacity=30);
 }
