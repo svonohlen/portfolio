@@ -16,13 +16,27 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
  * Base
  */
 // Debug
-// const gui = new dat.GUI();
+const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
+
+/**
+ *Welcomelayer
+ */
+
+switch1.addEventListener("click", () => {
+  setTimeout(() => {
+    document.getElementById("welcome-layer").style.display = "none";
+    document.getElementById("nav-projects").style.display = "";
+    document.getElementById("nav-about").style.display = "";
+    document.getElementById("nav-contact").style.display = "";
+    document.getElementById("nav-credits").style.display = "";
+  }, 1500);
+});
 
 /*** Update all Materials */
 const updateAllMaterials = () => {
@@ -42,10 +56,17 @@ const updateAllMaterials = () => {
  */
 
 // Loaders
+
+const loadingManager = new THREE.LoadingManager();
+
+loadingManager.onLoad = () => {
+  document.getElementById("loading-circle").style.display = "none";
+};
+
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("/draco/");
 
-const gltfLoader = new GLTFLoader();
+const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load("portfolioscene.glb", (gltf) => {
@@ -55,13 +76,16 @@ gltfLoader.load("portfolioscene.glb", (gltf) => {
   scene.add(gltf.scene);
   updateAllMaterials();
 
+  //  console.log(curvedScreen);
+
   gui
     .add(gltf.scene.rotation, "y")
     .min(-Math.PI)
     .max(Math.PI)
     .step(0.001)
     .name("RotationY");
-  console.log(gltf);
+
+  // const monitor = gltf.scene.getObjectByName("monitor");
 });
 
 /**
@@ -104,6 +128,7 @@ scene.add(directionalLight);
 // scene.add(directionalLightCameraHelper); // only needed when adjusting the directionallight shadow camera
 
 //Lights GUI
+
 gui
   .add(directionalLight, "intensity")
   .min(0)
@@ -177,6 +202,10 @@ controls.target.set(0.1, 0.9, 0);
 controls.enableDamping = true;
 
 /**
+ *Interactions
+ */
+
+/**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
@@ -210,6 +239,27 @@ gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 /**
  * Animate
  */
+const pointer = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
+
+const onMouseClick = (event) => {
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  // for (let i = 0; i < intersects.length; i++) {
+  //   console.log(intersects[i].object.name);
+  // }
+
+  if (intersects.length > 0) {
+    console.log(intersects[0].object.name);
+  }
+};
+
+window.addEventListener("click", onMouseClick);
+
 const clock = new THREE.Clock();
 let previousTime = 0;
 

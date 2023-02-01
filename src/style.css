@@ -15,18 +15,13 @@ body {
   outline: none;
 }
 
-.welcomecontainer {
+#welcome-container {
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("../static/images/lightbulb_background_vertical2.png");
-  background-position: center;
-  background-color: black;
 }
 
-.welcomelayer {
+#welcome-layer {
   width: 100vw;
   height: 100vh;
   font-family: Helvetica, Arial, sans-serif;
@@ -37,9 +32,16 @@ body {
   z-index: 1;
   align-items: center;
   justify-content: start;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../static/images/lightbulb_background_vertical2.png");
+  background-position: center;
+  background-color: black;
+  opacity: 0.95;
 }
 
-.text-container {
+#text-container {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -50,17 +52,17 @@ body {
   justify-content: flex-start;
 }
 
-.text-headline {
+#text-headline {
   font-size: 18vw;
   margin-top: 4.5vh;
   margin-bottom: 7vh;
 }
 
-.text-subtitle {
+#text-subtitle {
   font-size: 5vw;
 }
 
-.navigation {
+#navigation {
   z-index: 2;
   position: fixed;
   width: 100vw;
@@ -74,19 +76,20 @@ ul {
   text-align: center;
 }
 
-li {
+#nav-projects,
+#nav-about,
+#nav-contact,
+#nav-credits {
   display: inline;
   font-family: Helvetica, Arial, sans-serif;
-
   color: white;
-
   font-size: 3vw;
   margin-right: 5vw;
   margin-left: 5vw;
   font-weight: 400;
 }
 
-.switch-container {
+#switch-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,16 +103,13 @@ li {
 }
 
 @media only screen and (min-width: 768px) {
-  .welcomecontainer {
+  #welcome-layer {
+    align-items: flex-end;
+    justify-content: center;
     background-image: url("../static/images/lightbulb_background_cut2.png");
   }
 
-  .welcomelayer {
-    align-items: flex-end;
-    justify-content: center;
-  }
-
-  .text-container {
+  #text-container {
     height: 60vh;
     width: 45vw;
     margin-bottom: 3em;
@@ -117,17 +117,17 @@ li {
     justify-content: center;
   }
 
-  .text-headline {
+  #text-headline {
     font-size: 7vw;
     margin-bottom: 2.5vh;
     margin-top: 0px;
   }
 
-  .text-subtitle {
+  #text-subtitle {
     font-size: 2vw;
   }
 
-  .switch-container {
+  #switch-container {
     font-size: 0.5vw;
     margin-top: 0px;
     margin-left: 0px;
@@ -139,7 +139,10 @@ li {
     text-align: left;
   }
 
-  li {
+  #nav-projects,
+  #nav-about,
+  #nav-contact,
+  #nav-credits {
     font-size: 1vw;
     font-weight: 700;
     margin: 0.5vh 2vw;
@@ -647,4 +650,42 @@ li {
   background: #fff;
   background: rgba(255, 255, 255, 0.3);
   filter: alpha(opacity=30);
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  margin-top: 2em;
+  width: 6.6em;
+  height: 6.6em;
+  z-index: 11;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 6.6em;
+  height: 6.6em;
+
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -7,28 +7,34 @@
   </head>
   <body>
     <canvas class="webgl"></canvas>
-    <div class="welcomecontainer">
-      <div class="navigation">
+    <div id="welcome-container">
+      <div id="navigation">
         <ul>
-          <li><a>Projects</a></li>
-          <li><a>About me</a></li>
-          <li><a>Get in touch</a></li>
-          <li><a>Credits</a></li>
+          <li id="nav-projects" style="display: none"><a>Projects</a></li>
+          <li id="nav-about" style="display: none"><a>About me</a></li>
+          <li id="nav-contact" style="display: none"><a>Get in touch</a></li>
+          <li id="nav-credits" style="display: none"><a>Credits</a></li>
         </ul>
       </div>
-      <div class="welcomelayer">
-        <div class="text-container">
-          <div class="text-headline">Welcome.</div>
-          <div class="text-subtitle">
+      <div id="welcome-layer">
+        <div id="text-container">
+          <div id="text-headline">Welcome.</div>
+          <div id="text-subtitle">
             My name is Sandrin von Ohlen and I am a Fullstack-Developer.<br /><br />To
             shed some light on my skills and me as a person, feel free to flip
             the switch!
           </div>
         </div>
-        <div class="switch-container">
+        <div id="switch-container">
           <span class="switch">
             <span class="switch-border1">
               <span class="switch-border2">
+                <div id="loading-circle" class="lds-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
                 <input id="switch1" type="checkbox" checked />
                 <label for="switch1"></label>
                 <span class="switch-top"></span>
