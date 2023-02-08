@@ -15,12 +15,6 @@ body {
   outline: none;
 }
 
-#welcome-container {
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-}
-
 #welcome-layer {
   width: 100vw;
   height: 100vh;

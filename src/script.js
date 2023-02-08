@@ -4,6 +4,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import { gsap } from "gsap";
+
 // import Stats from "stats.js";
 
 /*** FPS */
@@ -28,9 +30,12 @@ const scene = new THREE.Scene();
  *Welcomelayer
  */
 
+const switch1 = document.getElementById("switch1");
+
 switch1.addEventListener("click", () => {
   setTimeout(() => {
-    document.getElementById("welcome-layer").style.display = "none";
+    const welcomeLayer = document.getElementById("welcome-layer");
+    welcomeLayer.remove();
     document.getElementById("nav-projects").style.display = "";
     document.getElementById("nav-about").style.display = "";
     document.getElementById("nav-contact").style.display = "";
@@ -72,11 +77,10 @@ gltfLoader.setDRACOLoader(dracoLoader);
 gltfLoader.load("portfolioscene.glb", (gltf) => {
   // gltf.scene.scale.set(2, 2, 2);
   //gltf.scene.position.set(0, -4, 0);
-  gltf.scene.rotation.y = 0.442;
+  // gltf.scene.rotation.y = 0.442;
+  gltf.scene.rotation.y = 0.007;
   scene.add(gltf.scene);
   updateAllMaterials();
-
-  //  console.log(curvedScreen);
 
   gui
     .add(gltf.scene.rotation, "y")
@@ -86,28 +90,12 @@ gltfLoader.load("portfolioscene.glb", (gltf) => {
     .name("RotationY");
 
   // const monitor = gltf.scene.getObjectByName("monitor");
+
+  // console.log(monitor);
+
+  // const flipPhone = gltf.scene.getObjectByName("defaultMaterial003");
+  // console.log(flipPhone);
 });
-
-/**
- * Floor
- */
-// const floor = new THREE.Mesh(
-//   new THREE.PlaneGeometry(10, 10),
-//   new THREE.MeshStandardMaterial({
-//     color: "#444444",
-//     metalness: 0,
-//     roughness: 0.5,
-//   })
-// );
-// floor.receiveShadow = true;
-// floor.rotation.x = -Math.PI * 0.5;
-// scene.add(floor);
-
-/**
- * Lights
- */
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-// scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
 directionalLight.castShadow = true;
@@ -129,30 +117,30 @@ scene.add(directionalLight);
 
 //Lights GUI
 
-gui
-  .add(directionalLight, "intensity")
-  .min(0)
-  .max(10)
-  .step(0.001)
-  .name("lightIntensity");
-gui
-  .add(directionalLight.position, "x")
-  .min(-5)
-  .max(5)
-  .step(0.001)
-  .name("lightX");
-gui
-  .add(directionalLight.position, "y")
-  .min(-5)
-  .max(5)
-  .step(0.001)
-  .name("lighty");
-gui
-  .add(directionalLight.position, "z")
-  .min(-5)
-  .max(5)
-  .step(0.001)
-  .name("lightZ");
+// gui
+//   .add(directionalLight, "intensity")
+//   .min(0)
+//   .max(10)
+//   .step(0.001)
+//   .name("lightIntensity");
+// gui
+//   .add(directionalLight.position, "x")
+//   .min(-5)
+//   .max(5)
+//   .step(0.001)
+//   .name("lightX");
+// gui
+//   .add(directionalLight.position, "y")
+//   .min(-5)
+//   .max(5)
+//   .step(0.001)
+//   .name("lighty");
+// gui
+//   .add(directionalLight.position, "z")
+//   .min(-5)
+//   .max(5)
+//   .step(0.001)
+//   .name("lightZ");
 
 // gui
 //   .add(ambientLight, "intensity")
@@ -186,6 +174,7 @@ window.addEventListener("resize", () => {
 /**
  * Camera
  */
+
 // Base camera
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -193,13 +182,49 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(2, 1.5, 4);
+camera.position.set(0.4, 1.5, 4);
+
 scene.add(camera);
 
-// Controls
 const controls = new OrbitControls(camera, canvas);
 controls.target.set(0.1, 0.9, 0);
 controls.enableDamping = true;
+controls.maxDistance = 10;
+
+// controls.addEventListener("change", () => console.log("Controls Change"));
+// controls.addEventListener("start", () => console.log("Controls Start Event"));
+// controls.addEventListener("end", () => console.log("Controls End Event"));
+
+// // controls.dampingFactor = 0.01;
+// // controls.rotateSpeed = 0.03;
+// controls.enableZoom = true;
+// // controls.zoomSpeed = 0.5;
+// controls.enableKeys = true; //older versions
+// controls.listenToKeyEvents(document.body);
+// controls.keys = {
+//   LEFT: "ArrowLeft", //left arrow
+//   UP: "ArrowUp", // up arrow
+//   RIGHT: "ArrowRight", // right arrow
+//   BOTTOM: "ArrowDown", // down arrow
+// };
+// controls.mouseButtons = {
+//   LEFT: THREE.MOUSE.ROTATE,
+//   MIDDLE: THREE.MOUSE.DOLLY,
+//   RIGHT: THREE.MOUSE.PAN,
+// };
+// controls.touches = {
+//   ONE: THREE.TOUCH.ROTATE,
+//   TWO: THREE.TOUCH.DOLLY_PAN,
+// };
+// // controls.screenSpacePanning = true;
+// // controls.minAzimuthAngle = 0;
+// // controls.maxAzimuthAngle = Math.PI / 2;
+// // controls.minPolarAngle = 0;
+// // controls.maxPolarAngle = Math.PI;
+// // controls.maxDistance = 4;
+// // controls.minDistance = 2;
+
+// controls.update();
 
 /**
  *Interactions
@@ -226,19 +251,23 @@ renderer.toneMappingExposure = 1;
 
 //Tonemapping GUI
 
-gui.add(renderer, "toneMapping", {
-  No: THREE.NoToneMapping,
-  Linear: THREE.LinearToneMapping,
-  Reinhard: THREE.ReinhardToneMapping,
-  Cineon: THREE.CineonToneMapping,
-  ACESFilmic: THREE.ACESFilmicToneMapping,
-});
+// gui.add(renderer, "toneMapping", {
+//   No: THREE.NoToneMapping,
+//   Linear: THREE.LinearToneMapping,
+//   Reinhard: THREE.ReinhardToneMapping,
+//   Cineon: THREE.CineonToneMapping,
+//   ACESFilmic: THREE.ACESFilmicToneMapping,
+// });
 
-gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
+// gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 
 /**
  * Animate
  */
+
+// const axesHelper = new THREE.AxesHelper(5);
+// scene.add(axesHelper);
+
 const pointer = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
 
@@ -249,12 +278,71 @@ const onMouseClick = (event) => {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
-  // for (let i = 0; i < intersects.length; i++) {
-  //   console.log(intersects[i].object.name);
-  // }
+  if (intersects.length > 0) {
+    console.log(intersects[0].object);
+    console.log(pointer.x, pointer.y);
+  }
+
+  //Monitor
 
   if (intersects.length > 0) {
-    console.log(intersects[0].object.name);
+    if (intersects[0].object.name === "monitorscreen") {
+      gsap.to(camera.position, {
+        duration: 1,
+        x: 0,
+        y: 1.6,
+        z: 0.4,
+        // onUpdate: function () {
+        //   camera.lookAt(2, 2, 2);
+        // },
+      });
+      controls.target.set(0.00000000001, 1.59999999999, 0.2894382476806641);
+    }
+
+    //Flip Phone
+
+    if (intersects[0].object.name === "defaultMaterial003") {
+      gsap.to(camera.position, {
+        duration: 1,
+        x: -0.7214790996784565,
+        y: 1.1,
+        z: 0.07,
+        // onUpdate: function () {
+        //   camera.lookAt(2, 2, 2);
+        // },
+      });
+      controls.target.set(-0.75, 1.06, 0.02);
+    }
+
+    //Laptop
+
+    if (intersects[0].object.name === "laptopscreen") {
+      gsap.to(camera.position, {
+        duration: 1,
+        x: 1.33,
+        y: 1.3,
+        z: 0.1,
+        // onUpdate: function () {
+        //   camera.lookAt(2, 2, 2);
+        // },
+      });
+      controls.target.set(1.3835, 1.24, 0.02);
+    }
+
+    //Notebook
+
+    if (intersects[0].object.name === "Object_4004") {
+      gsap.to(camera.position, {
+        duration: 1,
+        x: -1.67,
+        y: 1.32,
+        z: 0.335,
+        // onUpdate: function () {
+        //   camera.lookAt(2, 2, 2);
+        // },
+      });
+      controls.target.set(-1.673, -0.34986225895316814, 0.325);
+    }
   }
 };
 
