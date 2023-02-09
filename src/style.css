@@ -83,6 +83,15 @@ ul {
   font-weight: 400;
 }
 
+#nav-projects:hover,
+#nav-about:hover,
+#nav-contact:hover,
+#nav-credits:hover,
+#nav-back:hover {
+  cursor: pointer;
+  color: #d3d2d2;
+}
+
 #switch-container {
   display: flex;
   justify-content: center;
@@ -140,6 +149,18 @@ ul {
     font-size: 1vw;
     font-weight: 700;
     margin: 0.5vh 2vw;
+  }
+
+  #nav-back {
+    font-size: 1.2vw;
+    margin-left: 55vw;
+    margin-right: 2vw;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    display: inline;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    font-weight: 700;
   }
 }
 

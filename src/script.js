@@ -1,7 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "lil-gui";
+// import * as dat from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
@@ -18,7 +18,7 @@ import { gsap } from "gsap";
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -82,12 +82,12 @@ gltfLoader.load("portfolioscene.glb", (gltf) => {
   scene.add(gltf.scene);
   updateAllMaterials();
 
-  gui
-    .add(gltf.scene.rotation, "y")
-    .min(-Math.PI)
-    .max(Math.PI)
-    .step(0.001)
-    .name("RotationY");
+  // gui
+  //   .add(gltf.scene.rotation, "y")
+  //   .min(-Math.PI)
+  //   .max(Math.PI)
+  //   .step(0.001)
+  //   .name("RotationY");
 
   // const monitor = gltf.scene.getObjectByName("monitor");
 
@@ -268,6 +268,80 @@ renderer.toneMappingExposure = 1;
 // const axesHelper = new THREE.AxesHelper(5);
 // scene.add(axesHelper);
 
+/**
+ * Mouse Events
+ * */
+
+const checkZoom = () => {
+  if (
+    controls.target.x == 0.1 &&
+    controls.target.y == 0.9 &&
+    controls.target.z == 0
+  ) {
+    document.getElementById("nav-back").style.display = "none";
+  } else {
+    document.getElementById("nav-back").style.display = "";
+  }
+};
+
+const monitorZoom = () => {
+  gsap.to(camera.position, {
+    duration: 1,
+    x: 0,
+    y: 1.6,
+    z: 0.4,
+    // onUpdate: function () {
+    //   camera.lookAt(2, 2, 2);
+    // },
+  });
+  controls.target.set(0.00000000001, 1.59999999999, 0.2894382476806641);
+  checkZoom();
+};
+
+const phoneZoom = () => {
+  gsap.to(camera.position, {
+    duration: 1,
+    x: -0.7214790996784565,
+    y: 1.1,
+    z: 0.07,
+    // onUpdate: function () {
+    //   camera.lookAt(2, 2, 2);
+    // },
+  });
+  controls.target.set(-0.75, 1.06, 0.02);
+  checkZoom();
+};
+
+const laptopZoom = () => {
+  gsap.to(camera.position, {
+    duration: 1,
+    x: 1.33,
+    y: 1.3,
+    z: 0.1,
+    // onUpdate: function () {
+    //   camera.lookAt(2, 2, 2);
+    // },
+  });
+  controls.target.set(1.3835, 1.24, 0.02);
+  checkZoom();
+};
+
+const notebookZoom = () => {
+  gsap.to(camera.position, {
+    duration: 1,
+    x: -1.67,
+    y: 1.32,
+    z: 0.335,
+    // onUpdate: function () {
+    //   camera.lookAt(2, 2, 2);
+    // },
+  });
+  controls.target.set(-1.673, -0.34986225895316814, 0.325);
+  checkZoom();
+};
+
+// Object Clicks
+
 const pointer = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
 
@@ -278,75 +352,97 @@ const onMouseClick = (event) => {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
-  if (intersects.length > 0) {
-    console.log(intersects[0].object);
-    console.log(pointer.x, pointer.y);
-  }
+  // if (intersects.length > 0) {
+  //   console.log(intersects[0].object);
+  //   console.log(pointer.x, pointer.y);
+  // }
 
   //Monitor
 
   if (intersects.length > 0) {
     if (intersects[0].object.name === "monitorscreen") {
-      gsap.to(camera.position, {
-        duration: 1,
-        x: 0,
-        y: 1.6,
-        z: 0.4,
-        // onUpdate: function () {
-        //   camera.lookAt(2, 2, 2);
-        // },
-      });
-      controls.target.set(0.00000000001, 1.59999999999, 0.2894382476806641);
+      monitorZoom();
     }
 
     //Flip Phone
 
     if (intersects[0].object.name === "defaultMaterial003") {
-      gsap.to(camera.position, {
-        duration: 1,
-        x: -0.7214790996784565,
-        y: 1.1,
-        z: 0.07,
-        // onUpdate: function () {
-        //   camera.lookAt(2, 2, 2);
-        // },
-      });
-      controls.target.set(-0.75, 1.06, 0.02);
+      phoneZoom();
     }
 
     //Laptop
 
     if (intersects[0].object.name === "laptopscreen") {
-      gsap.to(camera.position, {
-        duration: 1,
-        x: 1.33,
-        y: 1.3,
-        z: 0.1,
-        // onUpdate: function () {
-        //   camera.lookAt(2, 2, 2);
-        // },
-      });
-      controls.target.set(1.3835, 1.24, 0.02);
+      laptopZoom();
     }
 
     //Notebook
 
     if (intersects[0].object.name === "Object_4004") {
-      gsap.to(camera.position, {
-        duration: 1,
-        x: -1.67,
-        y: 1.32,
-        z: 0.335,
-        // onUpdate: function () {
-        //   camera.lookAt(2, 2, 2);
-        // },
-      });
-      controls.target.set(-1.673, -0.34986225895316814, 0.325);
+      notebookZoom();
     }
   }
 };
 
 window.addEventListener("click", onMouseClick);
+
+// Object hover
+
+const onMouseMove = (event) => {
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  //Monitor
+
+  if (intersects.length > 0) {
+    if (
+      intersects[0].object.name === "monitorscreen" ||
+      intersects[0].object.name === "defaultMaterial003" ||
+      intersects[0].object.name === "laptopscreen" ||
+      intersects[0].object.name === "Object_4004"
+    ) {
+      document.body.style.cursor = "pointer";
+    } else {
+      document.body.style.cursor = "default";
+    }
+  }
+};
+
+window.addEventListener("mousemove", onMouseMove);
+
+const projectsNav = document.getElementById("nav-projects");
+projectsNav.addEventListener("click", () => {
+  monitorZoom();
+});
+
+const contactNav = document.getElementById("nav-contact");
+contactNav.addEventListener("click", () => {
+  phoneZoom();
+});
+
+const aboutNav = document.getElementById("nav-about");
+aboutNav.addEventListener("click", () => {
+  laptopZoom();
+});
+
+const creditsNav = document.getElementById("nav-credits");
+creditsNav.addEventListener("click", () => {
+  notebookZoom();
+});
+
+const resetNav = document.getElementById("nav-back");
+resetNav.addEventListener("click", () => {
+  gsap.to(camera.position, {
+    duration: 1,
+    x: 0.4,
+    y: 1.5,
+    z: 4,
+  });
+  controls.target.set(0.1, 0.9, 0);
+});
 
 const clock = new THREE.Clock();
 let previousTime = 0;
