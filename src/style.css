@@ -199,6 +199,11 @@ ul {
   transition: top 0.2s;
 }
 
+.switch label:hover,
+#loading-circle:hover {
+  cursor: wait;
+}
+
 .switch-border1 {
   border: 0.1em solid #000;
   border-radius: 3.5em;

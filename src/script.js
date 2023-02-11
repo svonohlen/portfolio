@@ -61,11 +61,11 @@ const updateAllMaterials = () => {
  */
 
 // Loaders
-
 const loadingManager = new THREE.LoadingManager();
 
 loadingManager.onLoad = () => {
   document.getElementById("loading-circle").style.display = "none";
+  document.getElementById("switch-label").style.cursor = "pointer";
 };
 
 const dracoLoader = new DRACOLoader();
@@ -74,7 +74,7 @@ dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load("portfolioscene.glb", (gltf) => {
+gltfLoader.load("updatedsetup_10feb23.glb", (gltf) => {
   // gltf.scene.scale.set(2, 2, 2);
   //gltf.scene.position.set(0, -4, 0);
   // gltf.scene.rotation.y = 0.442;
@@ -312,6 +312,8 @@ const phoneZoom = () => {
   checkZoom();
 };
 
+//Gmail Phone Contact
+
 const laptopZoom = () => {
   gsap.to(camera.position, {
     duration: 1,
@@ -370,6 +372,19 @@ const onMouseClick = (event) => {
       phoneZoom();
     }
 
+    if (
+      controls.target.x == -0.75 &&
+      controls.target.y == 1.06 &&
+      controls.target.z == 0.02
+    ) {
+      if (intersects[0].object.name === "gmail_plane") {
+        window.location = "mailto:sandrinvonohlen@gmail.com";
+      } else if (intersects[0].object.name === "linkedin_plane") {
+        window.open("https://www.linkedin.com/in/sandrin-von-ohlen/");
+      } else if (intersects[0].object.name === "github_plane") {
+        window.open("https://github.com/svonohlen");
+      }
+    }
     //Laptop
 
     if (intersects[0].object.name === "laptopscreen") {
@@ -399,10 +414,20 @@ const onMouseMove = (event) => {
 
   if (intersects.length > 0) {
     if (
+      intersects[0].object.name === "defaultMaterial003" &&
+      controls.target.x == -0.75 &&
+      controls.target.y == 1.06 &&
+      controls.target.z == 0.02
+    ) {
+      document.body.style.cursor = "default";
+    } else if (
       intersects[0].object.name === "monitorscreen" ||
       intersects[0].object.name === "defaultMaterial003" ||
       intersects[0].object.name === "laptopscreen" ||
-      intersects[0].object.name === "Object_4004"
+      intersects[0].object.name === "Object_4004" ||
+      intersects[0].object.name === "gmail_plane" ||
+      intersects[0].object.name === "linkedin_plane" ||
+      intersects[0].object.name === "github_plane"
     ) {
       document.body.style.cursor = "pointer";
     } else {
@@ -412,6 +437,8 @@ const onMouseMove = (event) => {
 };
 
 window.addEventListener("mousemove", onMouseMove);
+
+//Navbar clicks
 
 const projectsNav = document.getElementById("nav-projects");
 projectsNav.addEventListener("click", () => {
@@ -461,6 +488,7 @@ const tick = () => {
 
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
+
   // stats.end();
 };
 
