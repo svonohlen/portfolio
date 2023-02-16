@@ -6,6 +6,7 @@
 html,
 body {
   overflow: hidden;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .webgl {
@@ -18,7 +19,6 @@ body {
 #welcome-layer {
   width: 100vw;
   height: 100vh;
-  font-family: Helvetica, Arial, sans-serif;
   color: white;
   text-align: center;
   flex-direction: column;
@@ -26,7 +26,6 @@ body {
   z-index: 1;
   align-items: center;
   justify-content: start;
-
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url("../static/images/lightbulb_background_vertical2.png");
@@ -62,6 +61,19 @@ body {
   width: 100vw;
 }
 
+#close {
+  float: right;
+  padding: 2px 5px;
+}
+
+#close:hover {
+  float: right;
+  padding: 2px 5px;
+  background: #ccc;
+  color: #d3d2d2;
+  cursor: pointer;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -75,7 +87,6 @@ ul {
 #nav-contact,
 #nav-credits {
   display: inline;
-  font-family: Helvetica, Arial, sans-serif;
   color: white;
   font-size: 3vw;
   margin-right: 5vw;
@@ -87,7 +98,8 @@ ul {
 #nav-about:hover,
 #nav-contact:hover,
 #nav-credits:hover,
-#nav-back:hover {
+#nav-back:hover,
+#nav-instructions:hover {
   cursor: pointer;
   color: #d3d2d2;
 }
@@ -130,6 +142,28 @@ ul {
     font-size: 2vw;
   }
 
+  #instructions-headline {
+    font-size: 3vw;
+    margin-bottom: 2.5vh;
+    margin-top: 0px;
+  }
+
+  #instructions-text {
+    font-size: 2vw;
+  }
+
+  #instructions-container {
+    z-index: 12;
+    height: 45vh;
+    display: block;
+    position: fixed;
+    text-align: center;
+    margin: 30vh 25vw;
+    width: 50vw;
+    color: white;
+    background: rgba(53, 54, 55, 0.9);
+  }
+
   #switch-container {
     font-size: 0.5vw;
     margin-top: 0px;
@@ -148,13 +182,27 @@ ul {
   #nav-credits {
     font-size: 1vw;
     font-weight: 700;
-    margin: 0.5vh 2vw;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    margin-right: 1.5vw;
+    margin-left: 1.5vw;
   }
 
   #nav-back {
     font-size: 1.2vw;
-    margin-left: 55vw;
-    margin-right: 2vw;
+    margin-left: 48.5vw;
+    margin-right: 1.5vw;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    display: inline;
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    font-weight: 700;
+  }
+  #nav-instructions {
+    font-size: 1.2vw;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
     margin-top: 0.5vh;
     margin-bottom: 0.5vh;
     display: inline;

@@ -9,12 +9,27 @@
     <canvas class="webgl"></canvas>
     <div id="navigation">
       <ul>
-        <li id="nav-projects" style="display: none"><a>Projects</a></li>
-        <li id="nav-about" style="display: none"><a>About me</a></li>
-        <li id="nav-contact" style="display: none"><a>Get in touch</a></li>
-        <li id="nav-credits" style="display: none"><a>Credits</a></li>
-        <li id="nav-back" style="display: none"><a>Reset</a></li>
+        <li id="nav-projects" style="visibility: hidden"><a>Projects</a></li>
+        <li id="nav-about" style="visibility: hidden"><a>About me</a></li>
+        <li id="nav-contact" style="visibility: hidden">
+          <a>Get in touch</a>
+        </li>
+        <li id="nav-credits" style="visibility: hidden">
+          <a>To Dos & Credits</a>
+        </li>
+        <li id="nav-back" style="visibility: hidden"><a>Reset</a></li>
+        <li id="nav-instructions"><a>Instructions</a></li>
       </ul>
+    </div>
+    <div id="instructions-container" style="display: none">
+      <span id="close">x</span>
+      <div id="instructions-headline">Instructions<br /></div>
+      <div id="instructions-text">
+        Once you flipped the switch, feel free to play around!<br /><br />
+        Zoom in & out using your mouse wheel, try turning the scene upside down
+        or click on things.
+        <br /><br />Maybe you will find some hidden treasures!
+      </div>
     </div>
     <div id="welcome-layer">
       <div id="text-container">

@@ -5,6 +5,14 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
+// import bearImage from "../static/images/bear-combat.jpg";
+
+const image = new Image();
+const texture = new THREE.Texture(image);
+image.addEventListener("load", () => {
+  texture.needsUpdate = true;
+});
+image.src = "/images/bear-combat.jpg";
 
 // import Stats from "stats.js";
 
@@ -30,18 +38,9 @@ const scene = new THREE.Scene();
  *Welcomelayer
  */
 
-const switch1 = document.getElementById("switch1");
+const test_material = new THREE.MeshBasicMaterial({ map: texture });
 
-switch1.addEventListener("click", () => {
-  setTimeout(() => {
-    const welcomeLayer = document.getElementById("welcome-layer");
-    welcomeLayer.remove();
-    document.getElementById("nav-projects").style.display = "";
-    document.getElementById("nav-about").style.display = "";
-    document.getElementById("nav-contact").style.display = "";
-    document.getElementById("nav-credits").style.display = "";
-  }, 1500);
-});
+const switch1 = document.getElementById("switch1");
 
 /*** Update all Materials */
 const updateAllMaterials = () => {
@@ -66,7 +65,27 @@ const loadingManager = new THREE.LoadingManager();
 loadingManager.onLoad = () => {
   document.getElementById("loading-circle").style.display = "none";
   document.getElementById("switch-label").style.cursor = "pointer";
+  switch1.addEventListener("click", () => {
+    setTimeout(() => {
+      const welcomeLayer = document.getElementById("welcome-layer");
+      welcomeLayer.remove();
+      document.getElementById("nav-projects").style.visibility = "visible";
+      document.getElementById("nav-about").style.visibility = "visible";
+      document.getElementById("nav-contact").style.visibility = "visible";
+      document.getElementById("nav-credits").style.visibility = "visible";
+    }, 1500);
+  });
 };
+
+// loadingManager.onProgress = () => {
+//   switch1.addEventListener("click", () => {
+//     () => {
+//       document.getElementById("instructions-container").style.display = "";
+//       document.getElementById("text-headline").style.display = "none";
+//       document.getElementById("text-subtitle").style.display = "none";
+//     };
+//   });
+// };
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("/draco/");
@@ -278,9 +297,9 @@ const checkZoom = () => {
     controls.target.y == 0.9 &&
     controls.target.z == 0
   ) {
-    document.getElementById("nav-back").style.display = "none";
+    document.getElementById("nav-back").style.visibility = "hidden";
   } else {
-    document.getElementById("nav-back").style.display = "";
+    document.getElementById("nav-back").style.visibility = "visible";
   }
 };
 
@@ -388,7 +407,10 @@ const onMouseClick = (event) => {
     //Laptop
 
     if (intersects[0].object.name === "laptopscreen") {
+      //zoom in
       laptopZoom();
+      //screen material change on click
+      intersects[0].object.material = test_material;
     }
 
     //Notebook
@@ -469,6 +491,18 @@ resetNav.addEventListener("click", () => {
     z: 4,
   });
   controls.target.set(0.1, 0.9, 0);
+});
+
+const instructionsNav = document.getElementById("nav-instructions");
+instructionsNav.addEventListener("click", () => {
+  document.getElementById("instructions-container").style.display = "";
+  document.getElementById("text-headline").style.display = "none";
+  document.getElementById("text-subtitle").style.display = "none";
+});
+
+const closeInstructions = document.getElementById("close");
+closeInstructions.addEventListener("click", () => {
+  document.getElementById("instructions-container").style.display = "none";
 });
 
 const clock = new THREE.Clock();
