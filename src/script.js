@@ -94,7 +94,7 @@ const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load(
-  "updatedsetup_22feb2023_performanceimprnewtextures_updatedplantlapmonitor.glb",
+  "updatedsetup_23feb2023_performanceimprnewtextures_paper2.glb",
   (gltf) => {
     // gltf.scene.scale.set(2, 2, 2);
     //gltf.scene.position.set(0, -4, 0);
@@ -354,7 +354,7 @@ const notebookZoom = () => {
   gsap.to(camera.position, {
     duration: 1,
     x: -1.67,
-    y: 1.32,
+    y: 1.27,
     z: 0.335,
     // onUpdate: function () {
     //   camera.lookAt(2, 2, 2);
@@ -376,10 +376,10 @@ const onMouseClick = (event) => {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
-  // if (intersects.length > 0) {
-  //   console.log(intersects[0].object);
-  //   console.log(pointer.x, pointer.y);
-  // }
+  if (intersects.length > 0) {
+    console.log(intersects[0].object);
+    console.log(pointer.x, pointer.y);
+  }
 
   //Monitor
 
@@ -418,7 +418,10 @@ const onMouseClick = (event) => {
 
     //Notebook
 
-    if (intersects[0].object.name === "Object_4004") {
+    if (
+      intersects[0].object.name === "Object_4004" ||
+      intersects[0].object.name === "paper"
+    ) {
       notebookZoom();
     }
   }
@@ -452,7 +455,8 @@ const onMouseMove = (event) => {
       intersects[0].object.name === "Object_4004" ||
       intersects[0].object.name === "gmail_plane" ||
       intersects[0].object.name === "linkedin_plane" ||
-      intersects[0].object.name === "github_plane"
+      intersects[0].object.name === "github_plane" ||
+      intersects[0].object.name === "paper"
     ) {
       document.body.style.cursor = "pointer";
     } else {
