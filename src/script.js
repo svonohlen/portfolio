@@ -93,28 +93,31 @@ dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load("updatedsetup_10feb23.glb", (gltf) => {
-  // gltf.scene.scale.set(2, 2, 2);
-  //gltf.scene.position.set(0, -4, 0);
-  // gltf.scene.rotation.y = 0.442;
-  gltf.scene.rotation.y = 0.007;
-  scene.add(gltf.scene);
-  updateAllMaterials();
+gltfLoader.load(
+  "updatedsetup_22feb2023_performanceimprnewtextures_updatedplantlapmonitor.glb",
+  (gltf) => {
+    // gltf.scene.scale.set(2, 2, 2);
+    //gltf.scene.position.set(0, -4, 0);
+    // gltf.scene.rotation.y = 0.442;
+    gltf.scene.rotation.y = 0.007;
+    scene.add(gltf.scene);
+    updateAllMaterials();
 
-  // gui
-  //   .add(gltf.scene.rotation, "y")
-  //   .min(-Math.PI)
-  //   .max(Math.PI)
-  //   .step(0.001)
-  //   .name("RotationY");
+    // gui
+    //   .add(gltf.scene.rotation, "y")
+    //   .min(-Math.PI)
+    //   .max(Math.PI)
+    //   .step(0.001)
+    //   .name("RotationY");
 
-  // const monitor = gltf.scene.getObjectByName("monitor");
+    // const monitor = gltf.scene.getObjectByName("monitor");
 
-  // console.log(monitor);
+    // console.log(monitor);
 
-  // const flipPhone = gltf.scene.getObjectByName("defaultMaterial003");
-  // console.log(flipPhone);
-});
+    // const flipPhone = gltf.scene.getObjectByName("defaultMaterial003");
+    // console.log(flipPhone);
+  }
+);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
 directionalLight.castShadow = true;
@@ -500,9 +503,14 @@ instructionsNav.addEventListener("click", () => {
   document.getElementById("text-subtitle").style.display = "none";
 });
 
-const closeInstructions = document.getElementById("close");
+const closeInstructions = document.getElementById("close-instructions");
 closeInstructions.addEventListener("click", () => {
   document.getElementById("instructions-container").style.display = "none";
+});
+
+const closeMobile = document.getElementById("close-mobile");
+closeMobile.addEventListener("click", () => {
+  document.getElementById("mobile-container").style.display = "none";
 });
 
 const clock = new THREE.Clock();

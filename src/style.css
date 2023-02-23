@@ -61,12 +61,12 @@ body {
   width: 100vw;
 }
 
-#close {
+.close {
   float: right;
   padding: 2px 5px;
 }
 
-#close:hover {
+.close:hover {
   float: right;
   padding: 2px 5px;
   background: #ccc;
@@ -85,12 +85,13 @@ ul {
 #nav-projects,
 #nav-about,
 #nav-contact,
-#nav-credits {
+#nav-credits,
+#nav-instructions {
   display: inline;
   color: white;
   font-size: 3vw;
-  margin-right: 5vw;
-  margin-left: 5vw;
+  margin-right: 4vw;
+  margin-left: 4vw;
   font-weight: 400;
 }
 
@@ -102,6 +103,49 @@ ul {
 #nav-instructions:hover {
   cursor: pointer;
   color: #d3d2d2;
+}
+
+#nav-back {
+  display: none;
+}
+
+#mobile-text,
+#instructions-text {
+  font-size: 5vw;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  position: relative;
+  text-align: center;
+}
+
+#mobile-container {
+  z-index: 12;
+  height: 20em;
+  width: 80vw;
+  display: block;
+  position: fixed;
+  text-align: center;
+  margin: 8vh 10vw;
+  color: white;
+  background: rgba(53, 54, 55, 0.98);
+}
+
+#instructions-headline {
+  font-size: 6vw;
+  margin-bottom: 2.5vh;
+  margin-top: 1em;
+}
+
+#instructions-container {
+  z-index: 12;
+  height: 20em;
+  width: 80vw;
+  display: block;
+  position: fixed;
+  text-align: center;
+  margin: 8vh 10vw;
+  color: white;
+  background: rgba(53, 54, 55, 0.9);
 }
 
 #switch-container {
@@ -140,6 +184,10 @@ ul {
 
   #text-subtitle {
     font-size: 2vw;
+  }
+
+  #mobile-container {
+    display: none;
   }
 
   #instructions-headline {
