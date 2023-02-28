@@ -94,7 +94,7 @@ const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load(
-  "updatedsetup_23feb2023_performanceimprnewtextures_paper2.glb",
+  "updatedsetup_23feb2023_performanceimprnewtextures_arrows5.glb",
   (gltf) => {
     // gltf.scene.scale.set(2, 2, 2);
     //gltf.scene.position.set(0, -4, 0);
@@ -413,7 +413,18 @@ const onMouseClick = (event) => {
       //zoom in
       laptopZoom();
       //screen material change on click
-      intersects[0].object.material = test_material;
+    }
+    //Laptop material change on arrows
+    if (intersects[0].object.name === "right_arrow") {
+      // for (let i = 0; i < intersects.length - 1; i++) {
+      //   if (intersects[i].object.name === "laptopscreen") {
+      //     intersects[i].object.material = test_material;
+      //   }
+      // }
+
+      scene.children[2].children[4].children[1].children[0].material =
+        test_material;
+      // console.log(scene.children[2].children[4].children[1].children[0]);
     }
 
     //Notebook
@@ -456,7 +467,9 @@ const onMouseMove = (event) => {
       intersects[0].object.name === "gmail_plane" ||
       intersects[0].object.name === "linkedin_plane" ||
       intersects[0].object.name === "github_plane" ||
-      intersects[0].object.name === "paper"
+      intersects[0].object.name === "paper" ||
+      intersects[0].object.name === "left_arrow" ||
+      intersects[0].object.name === "right_arrow"
     ) {
       document.body.style.cursor = "pointer";
     } else {
