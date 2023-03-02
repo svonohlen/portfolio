@@ -1,18 +1,37 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-// import * as dat from "lil-gui";
+import * as dat from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
-// import bearImage from "../static/images/bear-combat.jpg";
 
-const image = new Image();
-const texture = new THREE.Texture(image);
-image.addEventListener("load", () => {
-  texture.needsUpdate = true;
+const imageAbout = new Image();
+const textureAbout = new THREE.Texture(imageAbout);
+imageAbout.addEventListener("load", () => {
+  textureAbout.needsUpdate = true;
 });
-image.src = "/images/bear-combat.jpg";
+imageAbout.src = "/images/laptopwelcome2.png";
+
+const imageDiving = new Image();
+const textureDiving = new THREE.Texture(imageDiving);
+imageDiving.addEventListener("load", () => {
+  textureDiving.needsUpdate = true;
+});
+imageDiving.src = "/images/diving2.jpg";
+
+const imageSnow = new Image();
+const textureSnow = new THREE.Texture(imageSnow);
+imageSnow.addEventListener("load", () => {
+  textureSnow.needsUpdate = true;
+});
+imageSnow.src = "/images/snowboarden_van.jpg";
+
+const laptopScreenMaterial = new THREE.MeshBasicMaterial({ map: textureAbout });
+const divingMaterial = new THREE.MeshBasicMaterial({ map: textureDiving });
+const snowMaterial = new THREE.MeshBasicMaterial({ map: textureSnow });
+
+const laptopMaterials = [laptopScreenMaterial, divingMaterial, snowMaterial];
 
 // import Stats from "stats.js";
 
@@ -33,12 +52,10 @@ const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
-
+console.log(scene);
 /**
  *Welcomelayer
  */
-
-const test_material = new THREE.MeshBasicMaterial({ map: texture });
 
 const switch1 = document.getElementById("switch1");
 
@@ -51,6 +68,9 @@ const updateAllMaterials = () => {
     ) {
       child.castShadow = true;
       child.receiveShadow = true;
+    }
+    if (child.name == "laptopscreen") {
+      child.material = laptopScreenMaterial;
     }
   });
 };
@@ -94,7 +114,7 @@ const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load(
-  "updatedsetup_23feb2023_performanceimprnewtextures_arrows5.glb",
+  "updatedsetup_1march2023_performanceimprnewtextures_fixes0.glb",
   (gltf) => {
     // gltf.scene.scale.set(2, 2, 2);
     //gltf.scene.position.set(0, -4, 0);
@@ -119,7 +139,14 @@ gltfLoader.load(
   }
 );
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+const pointLight = new THREE.PointLight(0xffffff, 4, 10, 2);
+pointLight.position.set(-1.9, 1.9, -0.58);
+scene.add(pointLight);
+
+// const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
+// scene.add(pointLightHelper);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024); //change quality of shadow
 directionalLight.shadow.camera.far = 15;
@@ -129,7 +156,7 @@ directionalLight.shadow.bias = -0.01; //to fix shadow acne due to self-shadowing
 // directionalLight.shadow.camera.top = 7;
 // directionalLight.shadow.camera.right = 7;
 // directionalLight.shadow.camera.bottom = -7;
-directionalLight.position.set(0.565, 5, 5);
+directionalLight.position.set(-1.043, 5, 5);
 scene.add(directionalLight);
 
 // const directionalLightCameraHelper = new THREE.CameraHelper(
@@ -137,14 +164,14 @@ scene.add(directionalLight);
 // );
 // scene.add(directionalLightCameraHelper); // only needed when adjusting the directionallight shadow camera
 
-//Lights GUI
+// //Lights GUI
 
 // gui
 //   .add(directionalLight, "intensity")
 //   .min(0)
 //   .max(10)
 //   .step(0.001)
-//   .name("lightIntensity");
+//   .name("dlightIntensity");
 // gui
 //   .add(directionalLight.position, "x")
 //   .min(-5)
@@ -163,6 +190,20 @@ scene.add(directionalLight);
 //   .max(5)
 //   .step(0.001)
 //   .name("lightZ");
+
+// gui
+//   .add(pointLight, "intensity")
+//   .min(0)
+//   .max(10)
+//   .step(0.001)
+//   .name("plightIntensity");
+// gui
+//   .add(pointLight, "distance")
+//   .min(0)
+//   .max(50)
+//   .step(0.001)
+//   .name("lightDistance");
+// gui.add(pointLight, "decay").min(0).max(10).step(0.001).name("lightDecay");
 
 // gui
 //   .add(ambientLight, "intensity")
@@ -221,14 +262,14 @@ controls.maxDistance = 10;
 // // controls.rotateSpeed = 0.03;
 // controls.enableZoom = true;
 // // controls.zoomSpeed = 0.5;
-// controls.enableKeys = true; //older versions
-// controls.listenToKeyEvents(document.body);
-// controls.keys = {
-//   LEFT: "ArrowLeft", //left arrow
-//   UP: "ArrowUp", // up arrow
-//   RIGHT: "ArrowRight", // right arrow
-//   BOTTOM: "ArrowDown", // down arrow
-// };
+controls.enableKeys = true; //older versions
+controls.listenToKeyEvents(document.body);
+controls.keys = {
+  LEFT: "ArrowLeft", //left arrow
+  UP: "ArrowUp", // up arrow
+  RIGHT: "ArrowRight", // right arrow
+  BOTTOM: "ArrowDown", // down arrow
+};
 // controls.mouseButtons = {
 //   LEFT: THREE.MOUSE.ROTATE,
 //   MIDDLE: THREE.MOUSE.DOLLY,
@@ -368,6 +409,7 @@ const notebookZoom = () => {
 
 const pointer = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
+let slideIndex = 0;
 
 const onMouseClick = (event) => {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -415,16 +457,33 @@ const onMouseClick = (event) => {
       //screen material change on click
     }
     //Laptop material change on arrows
-    if (intersects[0].object.name === "right_arrow") {
+
+    if (
+      intersects[0].object.name === "right_arrow" ||
+      intersects[0].object.name === "left_arrow"
+    ) {
       // for (let i = 0; i < intersects.length - 1; i++) {
       //   if (intersects[i].object.name === "laptopscreen") {
       //     intersects[i].object.material = test_material;
       //   }
       // }
 
-      scene.children[2].children[4].children[1].children[0].material =
-        test_material;
-      // console.log(scene.children[2].children[4].children[1].children[0]);
+      if (intersects[0].object.name === "right_arrow") {
+        if (slideIndex == 0 || slideIndex < laptopMaterials.length - 1) {
+          slideIndex += 1;
+        } else {
+          slideIndex = 0;
+        }
+      } else if (intersects[0].object.name === "left_arrow") {
+        if (slideIndex == 0) {
+          slideIndex = laptopMaterials.length - 1;
+        } else {
+          slideIndex -= 1;
+        }
+      }
+      console.log(slideIndex);
+      scene.children[3].children[4].children[1].children[0].material =
+        laptopMaterials[slideIndex];
     }
 
     //Notebook
