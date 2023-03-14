@@ -11,7 +11,16 @@ const textureAbout = new THREE.Texture(imageAbout);
 imageAbout.addEventListener("load", () => {
   textureAbout.needsUpdate = true;
 });
-imageAbout.src = "/images/laptopwelcome2.png";
+imageAbout.src = "/images/laptopwelcome3.jpg";
+textureAbout.encoding = THREE.sRGBEncoding;
+
+const imageDesk = new Image();
+const textureDesk = new THREE.Texture(imageDesk);
+imageDesk.addEventListener("load", () => {
+  textureDesk.needsUpdate = true;
+});
+imageDesk.src = "/images/mydesktext.jpg";
+textureDesk.encoding = THREE.sRGBEncoding;
 
 const imageDiving = new Image();
 const textureDiving = new THREE.Texture(imageDiving);
@@ -19,6 +28,7 @@ imageDiving.addEventListener("load", () => {
   textureDiving.needsUpdate = true;
 });
 imageDiving.src = "/images/diving2.jpg";
+textureDiving.encoding = THREE.sRGBEncoding;
 
 const imageSnow = new Image();
 const textureSnow = new THREE.Texture(imageSnow);
@@ -26,12 +36,19 @@ imageSnow.addEventListener("load", () => {
   textureSnow.needsUpdate = true;
 });
 imageSnow.src = "/images/snowboarden_van.jpg";
+textureSnow.encoding = THREE.sRGBEncoding;
 
 const laptopScreenMaterial = new THREE.MeshBasicMaterial({ map: textureAbout });
+const myDeskMaterial = new THREE.MeshBasicMaterial({ map: textureDesk });
 const divingMaterial = new THREE.MeshBasicMaterial({ map: textureDiving });
 const snowMaterial = new THREE.MeshBasicMaterial({ map: textureSnow });
 
-const laptopMaterials = [laptopScreenMaterial, divingMaterial, snowMaterial];
+const laptopMaterials = [
+  laptopScreenMaterial,
+  myDeskMaterial,
+  divingMaterial,
+  snowMaterial,
+];
 
 // import Stats from "stats.js";
 
@@ -93,6 +110,7 @@ loadingManager.onLoad = () => {
       document.getElementById("nav-about").style.visibility = "visible";
       document.getElementById("nav-contact").style.visibility = "visible";
       document.getElementById("nav-credits").style.visibility = "visible";
+      document.getElementById("nav-back").style.visibility = "visible";
     }, 1500);
   });
 };
@@ -114,7 +132,7 @@ const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load(
-  "updatedsetup_1march2023_performanceimprnewtextures_fixes0.glb",
+  "updatedsetup_13march2023_performanceimprnewtextures_fixesstretchedarrows.glb",
   (gltf) => {
     // gltf.scene.scale.set(2, 2, 2);
     //gltf.scene.position.set(0, -4, 0);
@@ -335,17 +353,17 @@ renderer.toneMappingExposure = 1;
  * Mouse Events
  * */
 
-const checkZoom = () => {
-  if (
-    controls.target.x == 0.1 &&
-    controls.target.y == 0.9 &&
-    controls.target.z == 0
-  ) {
-    document.getElementById("nav-back").style.visibility = "hidden";
-  } else {
-    document.getElementById("nav-back").style.visibility = "visible";
-  }
-};
+// const checkZoom = () => {
+//   if (
+//     controls.target.x == 0.1 &&
+//     controls.target.y == 0.9 &&
+//     controls.target.z == 0
+//   ) {
+//     document.getElementById("nav-back").style.visibility = "hidden";
+//   } else {
+//     document.getElementById("nav-back").style.visibility = "visible";
+//   }
+// };
 
 const monitorZoom = () => {
   gsap.to(camera.position, {
@@ -358,7 +376,7 @@ const monitorZoom = () => {
     // },
   });
   controls.target.set(0.00000000001, 1.59999999999, 0.2894382476806641);
-  checkZoom();
+  // checkZoom();
 };
 
 const phoneZoom = () => {
@@ -372,7 +390,7 @@ const phoneZoom = () => {
     // },
   });
   controls.target.set(-0.75, 1.06, 0.02);
-  checkZoom();
+  // checkZoom();
 };
 
 //Gmail Phone Contact
@@ -388,7 +406,7 @@ const laptopZoom = () => {
     // },
   });
   controls.target.set(1.3835, 1.24, 0.02);
-  checkZoom();
+  // checkZoom();
 };
 
 const notebookZoom = () => {
@@ -402,7 +420,7 @@ const notebookZoom = () => {
     // },
   });
   controls.target.set(-1.673, -0.34986225895316814, 0.325);
-  checkZoom();
+  // checkZoom();
 };
 
 // Object Clicks
@@ -459,8 +477,8 @@ const onMouseClick = (event) => {
     //Laptop material change on arrows
 
     if (
-      intersects[0].object.name === "right_arrow" ||
-      intersects[0].object.name === "left_arrow"
+      intersects[0].object.name === "arrowplane_right" ||
+      intersects[0].object.name === "arrowplane_left"
     ) {
       // for (let i = 0; i < intersects.length - 1; i++) {
       //   if (intersects[i].object.name === "laptopscreen") {
@@ -468,20 +486,20 @@ const onMouseClick = (event) => {
       //   }
       // }
 
-      if (intersects[0].object.name === "right_arrow") {
+      if (intersects[0].object.name === "arrowplane_right") {
         if (slideIndex == 0 || slideIndex < laptopMaterials.length - 1) {
           slideIndex += 1;
         } else {
           slideIndex = 0;
         }
-      } else if (intersects[0].object.name === "left_arrow") {
+      } else if (intersects[0].object.name === "arrowplane_left") {
         if (slideIndex == 0) {
           slideIndex = laptopMaterials.length - 1;
         } else {
           slideIndex -= 1;
         }
       }
-      console.log(slideIndex);
+
       scene.children[3].children[4].children[1].children[0].material =
         laptopMaterials[slideIndex];
     }
@@ -527,8 +545,8 @@ const onMouseMove = (event) => {
       intersects[0].object.name === "linkedin_plane" ||
       intersects[0].object.name === "github_plane" ||
       intersects[0].object.name === "paper" ||
-      intersects[0].object.name === "left_arrow" ||
-      intersects[0].object.name === "right_arrow"
+      intersects[0].object.name === "arrowplane_left" ||
+      intersects[0].object.name === "arrowplane_right"
     ) {
       document.body.style.cursor = "pointer";
     } else {
@@ -588,6 +606,22 @@ const closeMobile = document.getElementById("close-mobile");
 closeMobile.addEventListener("click", () => {
   document.getElementById("mobile-container").style.display = "none";
 });
+
+if (/Android|iPhone/i.test(navigator.userAgent)) {
+  // This checks if the current device is in fact mobile
+  document.getElementById("mobile-container").style.display = "";
+  document.getElementById("instructions-text").innerHTML =
+    "Once you flip the switch, feel free to play around!<br /><br /> Zoom in & out using your touch screen and pan to the left and right using two fingers. Try turning the scene upside down by dragging it with your fingers or just tap on any of the items on the screen.<br /><br /> Maybe you will find some hidden treasures!<br /><br /> If you get lost, just use the RESET button at the top of your screen 🙂";
+}
+
+function burgerMenu() {
+  let x = document.getElementById("burgerMenu");
+  if (x.className === "main-nav") {
+    x.className += " responsive";
+  } else {
+    x.className = "main-nav";
+  }
+}
 
 const clock = new THREE.Clock();
 let previousTime = 0;

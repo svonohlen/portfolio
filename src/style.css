@@ -86,7 +86,8 @@ ul {
 #nav-about,
 #nav-contact,
 #nav-credits,
-#nav-instructions {
+#nav-instructions,
+#nav-back {
   display: inline;
   color: white;
   font-size: 3vw;
@@ -105,9 +106,9 @@ ul {
   color: #d3d2d2;
 }
 
-#nav-back {
+/* #nav-back {
   display: none;
-}
+} */
 
 #mobile-text,
 #instructions-text {
@@ -120,7 +121,7 @@ ul {
 
 #mobile-container {
   z-index: 12;
-  height: 20em;
+  height: 22em;
   width: 80vw;
   display: block;
   position: fixed;
@@ -138,7 +139,7 @@ ul {
 
 #instructions-container {
   z-index: 12;
-  height: 40em;
+  height: 45em;
   width: 80vw;
   display: block;
   position: fixed;
@@ -186,9 +187,9 @@ ul {
     font-size: 2vw;
   }
 
-  #mobile-container {
+  /* #mobile-container {
     display: none;
-  }
+  } */
 
   #instructions-headline {
     font-size: 2.5vw;
@@ -202,7 +203,7 @@ ul {
 
   #instructions-container {
     z-index: 12;
-    height: 40vh;
+    height: 60vh;
     display: block;
     position: fixed;
     text-align: center;
@@ -218,6 +219,10 @@ ul {
     margin-left: 0px;
     height: 20vh;
     width: 45vw;
+  }
+
+  #mobile-container {
+    display: none;
   }
 
   ul {

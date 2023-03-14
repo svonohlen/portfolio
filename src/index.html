@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>portfolio</title>
+    <title>Sandrin's desk</title>
   </head>
   <body>
     <canvas class="webgl"></canvas>
+
     <div id="navigation">
       <ul>
-        <li id="nav-projects" style="visibility: hidden"><a>Projects</a></li>
-        <li id="nav-about" style="visibility: hidden"><a>About me</a></li>
-        <li id="nav-contact" style="visibility: hidden">
+        <li class="main-nav" id="nav-projects" style="visibility: hidden">
+          <a>Projects</a>
+        </li>
+        <li class="main-nav" id="nav-about" style="visibility: hidden">
+          <a>About me</a>
+        </li>
+        <li class="main-nav" id="nav-contact" style="visibility: hidden">
           <a>Get in touch</a>
         </li>
-        <li id="nav-credits" style="visibility: hidden">
+        <li class="main-nav" id="nav-credits" style="visibility: hidden">
           <a>To Dos & Credits</a>
         </li>
         <li id="nav-back" style="visibility: hidden"><a>Reset</a></li>
         <li id="nav-instructions"><a>Instructions</a></li>
       </ul>
     </div>
+
     <div id="instructions-container" style="display: none">
       <span id="close-instructions" class="close">x</span>
       <div id="instructions-headline">Instructions<br /></div>
@@ -38,15 +44,15 @@
         your screen 🙂
       </div>
     </div>
-    <div id="mobile-container">
+    <div id="mobile-container" style="display: none">
       <span id="close-mobile" class="close">x</span>
       <div id="mobile-text">
-        Dear mobile user,<br /><br />
-        This website is not intended to be used on a mobile device due to its 3D
-        models.<br /><br />
-        Please open it on your computer.<br /><br />
-        If you still would like to continue, I recommend to do so in horizontal
-        view for the best experience.<br /><br />
+        Hey there,<br /><br />
+        looks like you opened this page on your phone.<br /><br />
+        Since this website contains a 3D model the experience will be nicer on a
+        computer. So head over to your laptop and try it there too! 🙂<br /><br />
+        If your laptop is too far away, flip the switch and put your phone in
+        horizontal mode when needed!<br /><br />
         Enjoy!
       </div>
     </div>
@@ -54,7 +60,7 @@
       <div id="text-container">
         <div id="text-headline">Welcome.</div>
         <div id="text-subtitle">
-          My name is Sandrin von Ohlen and I am a Fullstack-Developer.<br /><br />To
+          My name is Sandrin von Ohlen and I am a full-stack developer.<br /><br />To
           shed some light on my skills and me as a person, feel free to flip the
           switch!
         </div>
