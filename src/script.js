@@ -131,7 +131,7 @@ dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load("desksetup_v12.glb", (gltf) => {
+gltfLoader.load("desksetup.glb", (gltf) => {
   // gltf.scene.scale.set(2, 2, 2);
   //gltf.scene.position.set(0, -4, 0);
   // gltf.scene.rotation.y = 0.442;
