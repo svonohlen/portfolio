@@ -131,7 +131,7 @@ dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load("desksetup_v11.glb", (gltf) => {
+gltfLoader.load("desksetup_v12.glb", (gltf) => {
   // gltf.scene.scale.set(2, 2, 2);
   //gltf.scene.position.set(0, -4, 0);
   // gltf.scene.rotation.y = 0.442;
@@ -477,12 +477,7 @@ const onMouseClick = (event) => {
       intersects[0].object.name === "arrowplane_right" ||
       intersects[0].object.name === "arrowplane_left"
     ) {
-      // for (let i = 0; i < intersects.length - 1; i++) {
-      //   if (intersects[i].object.name === "laptopscreen") {
-      //     intersects[i].object.material = test_material;
-      //   }
-      // }
-
+      // stores the slide position the user selected using the arrows
       if (intersects[0].object.name === "arrowplane_right") {
         if (slideIndex == 0 || slideIndex < laptopMaterials.length - 1) {
           slideIndex += 1;
@@ -497,8 +492,25 @@ const onMouseClick = (event) => {
         }
       }
 
-      scene.children[3].children[4].children[1].children[0].material =
-        laptopMaterials[slideIndex];
+      // updates picture on laptop based after user navigated
+      scene.children.forEach(function (sceneChild) {
+        if (sceneChild.name === "Scene") {
+          sceneChild.children.forEach(function (sceneObject) {
+            if (sceneObject.name === "laptop") {
+              sceneObject.children.forEach(function (laptopObject) {
+                if (laptopObject.name === "laptopmonitor") {
+                  laptopObject.children.forEach(function (laptopMonitorObject) {
+                    if (laptopMonitorObject.name === "laptopscreen") {
+                      laptopMonitorObject.material =
+                        laptopMaterials[slideIndex];
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
     }
 
     //Notebook
