@@ -623,13 +623,12 @@ if (/Android|iPhone/i.test(navigator.userAgent)) {
     "Once you flip the switch, feel free to play around!<br /><br /> Zoom in & out using your touch screen and pan to the left and right using two fingers. Try turning the scene upside down by dragging it with your fingers or just tap on any of the items on the screen.<br /><br /> Maybe you will find some hidden treasures!<br /><br /> If you get lost, just use the RESET button at the top of your screen 🙂";
 }
 
-function burgerMenu() {
-  let x = document.getElementById("burgerMenu");
-  if (x.className === "main-nav") {
-    x.className += " responsive";
-  } else {
-    x.className = "main-nav";
-  }
+const { detect } = require("detect-browser");
+const browser = detect();
+if (/Android|iPhone/i.test(navigator.userAgent) && browser.name == "chrome") {
+  document.getElementById("mobile-container").style.display = "";
+  document.getElementById("mobile-text").innerHTML =
+    "Hey there,<br /><br /> looks like you opened this page on your phone in the Safari browser.<br /><br />Since this website contains a 3D model the experience will be much nicer on a computer. So head over to your laptop and try it there too! 🙂<br /><br />If your laptop is too far away, switch to Chrome to enjoy all functionalities.<br /><br /> Flip the switch and put your phone in horizontal mode when needed!<br /><br />Enjoy!";
 }
 
 const clock = new THREE.Clock();
