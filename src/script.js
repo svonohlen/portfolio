@@ -625,7 +625,7 @@ if (/Android|iPhone/i.test(navigator.userAgent)) {
 
 const { detect } = require("detect-browser");
 const browser = detect();
-if (/Android|iPhone/i.test(navigator.userAgent) && browser.name == "chrome") {
+if (/Android|iPhone/i.test(navigator.userAgent) && browser.name == "safari") {
   document.getElementById("mobile-container").style.display = "";
   document.getElementById("mobile-text").innerHTML =
     "Hey there,<br /><br /> looks like you opened this page on your phone in the Safari browser.<br /><br />Since this website contains a 3D model the experience will be much nicer on a computer. So head over to your laptop and try it there too! 🙂<br /><br />If your laptop is too far away, switch to Chrome to enjoy all functionalities.<br /><br /> Flip the switch and put your phone in horizontal mode when needed!<br /><br />Enjoy!";
