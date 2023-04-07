@@ -1,11 +1,13 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
 
+const debug = false;
+
+// images to show on laptop
 const imageAbout = new Image();
 const textureAbout = new THREE.Texture(imageAbout);
 imageAbout.addEventListener("load", () => {
@@ -50,28 +52,13 @@ const laptopMaterials = [
   snowMaterial,
 ];
 
-// import Stats from "stats.js";
-
-/*** FPS */
-
-// const stats = new Stats();
-// stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-// document.body.appendChild(stats.dom);
-
-/**
- * Base
- */
-// Debug
-// const gui = new dat.GUI();
-
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
-console.log(scene);
 /**
- *Welcomelayer
+ * Welcome layer
  */
 
 const switch1 = document.getElementById("switch1");
@@ -115,16 +102,6 @@ loadingManager.onLoad = () => {
   });
 };
 
-// loadingManager.onProgress = () => {
-//   switch1.addEventListener("click", () => {
-//     () => {
-//       document.getElementById("instructions-container").style.display = "";
-//       document.getElementById("text-headline").style.display = "none";
-//       document.getElementById("text-subtitle").style.display = "none";
-//     };
-//   });
-// };
-
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("/draco/");
 
@@ -132,34 +109,14 @@ const gltfLoader = new GLTFLoader(loadingManager);
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load("desksetup.glb", (gltf) => {
-  // gltf.scene.scale.set(2, 2, 2);
-  //gltf.scene.position.set(0, -4, 0);
-  // gltf.scene.rotation.y = 0.442;
   gltf.scene.rotation.y = 0.007;
   scene.add(gltf.scene);
   updateAllMaterials();
-
-  // gui
-  //   .add(gltf.scene.rotation, "y")
-  //   .min(-Math.PI)
-  //   .max(Math.PI)
-  //   .step(0.001)
-  //   .name("RotationY");
-
-  // const monitor = gltf.scene.getObjectByName("monitor");
-
-  // console.log(monitor);
-
-  // const flipPhone = gltf.scene.getObjectByName("defaultMaterial003");
-  // console.log(flipPhone);
 });
 
 const pointLight = new THREE.PointLight(0xffffff, 4, 10, 2);
 pointLight.position.set(-1.9, 1.9, -0.58);
 scene.add(pointLight);
-
-// const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
-// scene.add(pointLightHelper);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
 directionalLight.castShadow = true;
@@ -167,65 +124,8 @@ directionalLight.shadow.mapSize.set(1024, 1024); //change quality of shadow
 directionalLight.shadow.camera.far = 15;
 directionalLight.shadow.camera.near = 0.5;
 directionalLight.shadow.bias = -0.01; //to fix shadow acne due to self-shadowing artifacts. bias for flat, normalbias for round surfaces
-// directionalLight.shadow.camera.left = -7;
-// directionalLight.shadow.camera.top = 7;
-// directionalLight.shadow.camera.right = 7;
-// directionalLight.shadow.camera.bottom = -7;
 directionalLight.position.set(-1.043, 5, 5);
 scene.add(directionalLight);
-
-// const directionalLightCameraHelper = new THREE.CameraHelper(
-//   directionalLight.shadow.camera
-// );
-// scene.add(directionalLightCameraHelper); // only needed when adjusting the directionallight shadow camera
-
-// //Lights GUI
-
-// gui
-//   .add(directionalLight, "intensity")
-//   .min(0)
-//   .max(10)
-//   .step(0.001)
-//   .name("dlightIntensity");
-// gui
-//   .add(directionalLight.position, "x")
-//   .min(-5)
-//   .max(5)
-//   .step(0.001)
-//   .name("lightX");
-// gui
-//   .add(directionalLight.position, "y")
-//   .min(-5)
-//   .max(5)
-//   .step(0.001)
-//   .name("lighty");
-// gui
-//   .add(directionalLight.position, "z")
-//   .min(-5)
-//   .max(5)
-//   .step(0.001)
-//   .name("lightZ");
-
-// gui
-//   .add(pointLight, "intensity")
-//   .min(0)
-//   .max(10)
-//   .step(0.001)
-//   .name("plightIntensity");
-// gui
-//   .add(pointLight, "distance")
-//   .min(0)
-//   .max(50)
-//   .step(0.001)
-//   .name("lightDistance");
-// gui.add(pointLight, "decay").min(0).max(10).step(0.001).name("lightDecay");
-
-// gui
-//   .add(ambientLight, "intensity")
-//   .min(0)
-//   .max(10)
-//   .step(0.001)
-//   .name("AmbientlightIntensity");
 
 /**
  * Sizes
@@ -269,14 +169,6 @@ controls.target.set(0.1, 0.9, 0);
 controls.enableDamping = true;
 controls.maxDistance = 10;
 
-// controls.addEventListener("change", () => console.log("Controls Change"));
-// controls.addEventListener("start", () => console.log("Controls Start Event"));
-// controls.addEventListener("end", () => console.log("Controls End Event"));
-
-// // controls.dampingFactor = 0.01;
-// // controls.rotateSpeed = 0.03;
-// controls.enableZoom = true;
-// // controls.zoomSpeed = 0.5;
 controls.enableKeys = true; //older versions
 controls.listenToKeyEvents(document.body);
 controls.keys = {
@@ -285,24 +177,6 @@ controls.keys = {
   RIGHT: "ArrowRight", // right arrow
   BOTTOM: "ArrowDown", // down arrow
 };
-// controls.mouseButtons = {
-//   LEFT: THREE.MOUSE.ROTATE,
-//   MIDDLE: THREE.MOUSE.DOLLY,
-//   RIGHT: THREE.MOUSE.PAN,
-// };
-// controls.touches = {
-//   ONE: THREE.TOUCH.ROTATE,
-//   TWO: THREE.TOUCH.DOLLY_PAN,
-// };
-// // controls.screenSpacePanning = true;
-// // controls.minAzimuthAngle = 0;
-// // controls.maxAzimuthAngle = Math.PI / 2;
-// // controls.minPolarAngle = 0;
-// // controls.maxPolarAngle = Math.PI;
-// // controls.maxDistance = 4;
-// // controls.minDistance = 2;
-
-// controls.update();
 
 /**
  *Interactions
@@ -327,53 +201,14 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.CineonToneMapping;
 renderer.toneMappingExposure = 1;
 
-//Tonemapping GUI
-
-// gui.add(renderer, "toneMapping", {
-//   No: THREE.NoToneMapping,
-//   Linear: THREE.LinearToneMapping,
-//   Reinhard: THREE.ReinhardToneMapping,
-//   Cineon: THREE.CineonToneMapping,
-//   ACESFilmic: THREE.ACESFilmicToneMapping,
-// });
-
-// gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
-
-/**
- * Animate
- */
-
-// const axesHelper = new THREE.AxesHelper(5);
-// scene.add(axesHelper);
-
-/**
- * Mouse Events
- * */
-
-// const checkZoom = () => {
-//   if (
-//     controls.target.x == 0.1 &&
-//     controls.target.y == 0.9 &&
-//     controls.target.z == 0
-//   ) {
-//     document.getElementById("nav-back").style.visibility = "hidden";
-//   } else {
-//     document.getElementById("nav-back").style.visibility = "visible";
-//   }
-// };
-
 const monitorZoom = () => {
   gsap.to(camera.position, {
     duration: 1,
     x: 0,
     y: 1.6,
     z: 0.4,
-    // onUpdate: function () {
-    //   camera.lookAt(2, 2, 2);
-    // },
   });
   controls.target.set(0.00000000001, 1.59999999999, 0.2894382476806641);
-  // checkZoom();
 };
 
 const phoneZoom = () => {
@@ -382,12 +217,8 @@ const phoneZoom = () => {
     x: -0.7214790996784565,
     y: 1.1,
     z: 0.07,
-    // onUpdate: function () {
-    //   camera.lookAt(2, 2, 2);
-    // },
   });
   controls.target.set(-0.75, 1.06, 0.02);
-  // checkZoom();
 };
 
 //Gmail Phone Contact
@@ -398,12 +229,8 @@ const laptopZoom = () => {
     x: 1.33,
     y: 1.3,
     z: 0.1,
-    // onUpdate: function () {
-    //   camera.lookAt(2, 2, 2);
-    // },
   });
   controls.target.set(1.3835, 1.24, 0.02);
-  // checkZoom();
 };
 
 const notebookZoom = () => {
@@ -412,12 +239,8 @@ const notebookZoom = () => {
     x: -1.67,
     y: 1.27,
     z: 0.335,
-    // onUpdate: function () {
-    //   camera.lookAt(2, 2, 2);
-    // },
   });
   controls.target.set(-1.673, -0.34986225895316814, 0.325);
-  // checkZoom();
 };
 
 // Object Clicks
@@ -433,7 +256,7 @@ const onMouseClick = (event) => {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
-  if (intersects.length > 0) {
+  if (debug === true && intersects.length > 0) {
     console.log(intersects[0].object);
     console.log(pointer.x, pointer.y);
   }
@@ -464,15 +287,15 @@ const onMouseClick = (event) => {
         window.open("https://github.com/svonohlen");
       }
     }
-    //Laptop
 
+    //Laptop
     if (intersects[0].object.name === "laptopscreen") {
       //zoom in
       laptopZoom();
       //screen material change on click
     }
-    //Laptop material change on arrows
 
+    //Laptop material change on arrows
     if (
       intersects[0].object.name === "arrowplane_right" ||
       intersects[0].object.name === "arrowplane_left"
@@ -631,15 +454,7 @@ if (/Android|iPhone/i.test(navigator.userAgent) && browser.name == "safari") {
     "Hey there,<br /><br /> looks like you opened this page on your phone in the Safari browser.<br /><br />Since this website contains a 3D model the experience will be much nicer on a computer. So head over to your laptop and try it there too! 🙂<br /><br />If your laptop is too far away, switch to Chrome to enjoy all functionalities.<br /><br /> Flip the switch and put your phone in horizontal mode when needed!<br /><br />Enjoy!";
 }
 
-const clock = new THREE.Clock();
-let previousTime = 0;
-
 const tick = () => {
-  // stats.begin();
-  const elapsedTime = clock.getElapsedTime();
-  const deltaTime = elapsedTime - previousTime;
-  previousTime = elapsedTime;
-
   // Update controls
   controls.update();
 
@@ -648,8 +463,6 @@ const tick = () => {
 
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
-
-  // stats.end();
 };
 
 tick();
